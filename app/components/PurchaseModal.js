@@ -36,7 +36,7 @@ class PurchaseModal extends React.Component {
         <div className="text-center">
           <QRCode address={chunk.address} />
           <br />
-          <small>Address: {chunk.address}</small>
+          <small>Address: <span className="selectable">{chunk.address}</span></small>
         </div>
       </Modal>
     )

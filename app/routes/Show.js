@@ -51,11 +51,13 @@ class Show extends React.Component {
       return null
 
     return (
-      <table className="table">
-        <tbody>
-          {payload.chunks.map(this.renderChunk.bind(this))}
-        </tbody>
-      </table>
+      <div className="table-container">
+        <table className="table">
+          <tbody>
+            {payload.chunks.map(this.renderChunk.bind(this))}
+          </tbody>
+        </table>
+      </div>
     )
   }
 
@@ -73,7 +75,7 @@ class Show extends React.Component {
     if (!info || !info.released) {
       return (
         <button
-            className="btn btn-default btn-sm"
+            className="btn btn-primary btn-sm"
             onClick={() => this.handlePurchase(chunk)}>
           Purchase
         </button>
@@ -81,7 +83,7 @@ class Show extends React.Component {
     } else {
       return (
         <button
-            className="btn btn-default btn-sm"
+            className="btn btn-primary btn-sm"
             onClick={() => this.handleDecrypt(chunk)}>
           Decrypt
         </button>
@@ -93,7 +95,7 @@ class Show extends React.Component {
     return (
       <tr key={chunk.address}>
         <td>
-          <h5>{chunk.address}</h5>
+          <h5 className="selectable">{chunk.address}</h5>
         </td>
         <td><AddressStatus address={chunk.address} /></td>
         <td>

@@ -21,7 +21,7 @@ class AddressStatus extends React.Component {
     } else {
       icon = 'eye-close'
 
-      let balance = bitcore.Unit.fromSatoshis(status.balance).toBTC()
+      let balance = bitcore.Unit.fromSatoshis(status.unconfirmedBalance).toBTC()
       label = `Received (${balance} BTC)`
     }
 

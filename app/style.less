@@ -11,6 +11,34 @@ body {
   -webkit-app-region: drag;
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  background: rgb(16, 18, 24);
+  color: white;
+}
+
+h1, h2, h3 {
+  font-weight: 100;
+}
+
+.welcome h1 {
+  font-size: 80px;
+}
+
+.list-group-item {
+  background: rgb(36, 39, 48);
+  border-color: rgb(16, 18, 24);
+}
+
+a.list-group-item {
+  color: white;
+}
+
+a.list-group-item:hover {
+  color: white;
+  background: rgb(43, 46, 55);
+}
+
+.selectable {
+  -webkit-user-select: text;
 }
 
 .container-narrow {
@@ -20,6 +48,7 @@ body {
 
 .page-header {
   margin-top: 0;
+  border-bottom: none;
   overflow: auto;
 }
 
@@ -31,12 +60,62 @@ body {
   padding: 20px;
 }
 
+.table-container {
+  background: rgb(36, 39, 48);
+  padding: 20px;
+
+  table {
+    margin-bottom: 0;
+  }
+}
+
+.table {
+  & > tbody > tr > td {
+    border-top: 2px solid rgb(45, 47, 56);
+    padding: 15px 0;
+  }
+
+  & > tbody > tr:first-child > td {
+    border-top: none;
+  }
+
+  h5 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .btn {
+    width: 90px;
+  }
+}
+
+.btn {
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 8 18px;
+}
+
+.btn-default {
+  color: rgba(255, 255, 255, 0.5);
+  background-color: #242730;
+  border: none;
+}
+
+.btn-link {
+  color: #1abbff;
+}
+
+.modal {
+  color: #333;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 30px;
-  background-color: #f5f5f5;
+  background: rgb(36, 39, 48);
+  color: rgb(80, 82, 89);
   padding: 5px 10px;
 }

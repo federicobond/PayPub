@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { Link, hashHistory as history } from 'react-router'
 import { saveRelease, exportRelease, syncAddresses, withdrawChunk } from '../actions'
@@ -69,11 +70,13 @@ class Manage extends React.Component {
       return null
 
     return (
-      <table className="table">
-        <tbody>
-          {payload.chunks.map(this.renderChunk.bind(this))}
-        </tbody>
-      </table>
+      <div className="table-container">
+        <table className="table">
+          <tbody>
+            {payload.chunks.map(this.renderChunk.bind(this))}
+          </tbody>
+        </table>
+      </div>
     )
   }
 
@@ -88,13 +91,13 @@ class Manage extends React.Component {
     return (
       <tr key={chunk.address}>
         <td>
-          <h5>{chunk.address}</h5>
+          <h5 className="selectable">{chunk.address}</h5>
           <small className="text-muted">{chunk.filename}</small>
         </td>
         <td><AddressStatus address={chunk.address} /></td>
         <td>
           <button
-              className="btn btn-default btn-sm"
+              className={classNames('btn btn-sm', withdrawDisabled ? 'btn-default' : 'btn-primary')}
               onClick={() => this.handleWithdraw(chunk)}
               disabled={withdrawDisabled}>
             Withdraw

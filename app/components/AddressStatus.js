@@ -24,12 +24,12 @@ class AddressStatus extends React.Component {
       let balance = bitcore.Unit.fromSatoshis(
         status.balance + status.unconfirmedBalance
       ).toBTC()
-      label = `Received (${balance} BTC)`
+      label = `${balance} BTC`
     }
 
     return (
       <span>
-        <i className={'glyphicon glyphicon-' + icon} /> {label}
+        <i className={'glyphicon glyphicon-' + icon} />&nbsp; {label}
       </span>
     )
   }

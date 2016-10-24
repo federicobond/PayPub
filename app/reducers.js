@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import { handleActions } from 'redux-actions'
 import addresses from './reducers/addresses'
 import files from './reducers/files'
 import modal from './reducers/modal'

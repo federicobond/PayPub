@@ -2,14 +2,14 @@ import React from 'react'
 import bitcore from 'bitcore-lib'
 import { connect } from 'react-redux'
 
-class AddressStatus extends React.Component {
+class AddressStatus extends React.PureComponent {
   static propTypes = {
     address: React.PropTypes.string.isRequired,
     status: React.PropTypes.object
   }
 
   render() {
-    const { address, status } = this.props
+    const { status } = this.props
     let icon, label
 
     if (!status) {
@@ -36,7 +36,7 @@ class AddressStatus extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const addresses = state.addresses || {}
+  const addresses = state.addresses || {}
   return { status: addresses[ownProps.address] }
 }
 

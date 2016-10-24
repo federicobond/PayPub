@@ -5,7 +5,13 @@ import AddressStatus from '../components/AddressStatus'
 import Header from '../components/Header'
 import { decryptChunk, purchaseChunk, syncAddresses } from '../actions'
 
-class Show extends React.Component {
+class Show extends React.PureComponent {
+  static propTypes = {
+    addresses: React.PropTypes.object,
+    dispatch: React.PropTypes.func.isRequired,
+    payload: React.PropTypes.object,
+  }
+
   componentWillMount() {
     if (!this.props.payload) {
       history.push('/')
@@ -33,15 +39,12 @@ class Show extends React.Component {
     return payload.chunks.map(chunk => chunk.address)
   }
 
-  render() {
-    return (
-      <div>
-        <Header title="Release">
-          <Link className="btn btn-default" to="/">Home</Link>
-        </Header>
-        {this.renderChunks()}
-      </div>
-    )
+  handlePurchase(chunk) {
+    this.props.dispatch(purchaseChunk(chunk))
+  }
+
+  handleDecrypt(chunk) {
+    this.props.dispatch(decryptChunk(chunk))
   }
 
   renderChunks() {
@@ -59,14 +62,6 @@ class Show extends React.Component {
         </table>
       </div>
     )
-  }
-
-  handlePurchase(chunk) {
-    this.props.dispatch(purchaseChunk(chunk))
-  }
-
-  handleDecrypt(chunk) {
-    this.props.dispatch(decryptChunk(chunk))
   }
 
   renderAction(chunk) {
@@ -102,6 +97,17 @@ class Show extends React.Component {
           {this.renderAction(chunk)}
         </td>
       </tr>
+    )
+  }
+
+  render() {
+    return (
+      <div>
+        <Header title="Release">
+          <Link className="btn btn-default" to="/">Home</Link>
+        </Header>
+        {this.renderChunks()}
+      </div>
     )
   }
 }

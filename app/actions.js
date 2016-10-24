@@ -2,8 +2,8 @@ const ipc = require('electron').ipcRenderer
 const aescbc = require('bitcore-ecies/lib/aescbc')
 
 import bitcore from 'bitcore-lib'
-import { hashHistory as history } from 'react-router'
-import { createAction } from 'redux-actions'
+import { hashHistory as history } from 'react-router'
+import { createAction } from 'redux-actions'
 import insight from '../insight'
 
 const FEE_IN_SATOSHIS = 10000
@@ -63,7 +63,7 @@ export const saveRelease = createAction('SAVE_RELEASE', (payload) => {
   ipc.send('save-file-dialog')
 })
 
-export const loadRelease = createAction('LOAD_RELEASE', (file) => {
+export const loadRelease = createAction('LOAD_RELEASE', () => {
   ipc.once('selected-files', function(event, paths) {
     ipc.send('load-release', paths[0])
   })
@@ -140,7 +140,7 @@ export const withdrawChunk = (chunk) => {
           .to(address, info.balance - FEE_IN_SATOSHIS)
           .sign(privateKey)
 
-        insight.broadcast(tx, function(err, utxos) {
+        insight.broadcast(tx, function(err) {
           if (err) throw err
         })
       })
@@ -149,7 +149,7 @@ export const withdrawChunk = (chunk) => {
 }
 
 export const purchaseChunk = (chunk) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(openModal('PurchaseModal', { chunk, onConfirm }))
 
     function onConfirm() {
@@ -166,10 +166,10 @@ export const decryptChunk = (chunk) => {
       }
 
       insight.addressTxs(chunk.address, function(err, data) {
-        console.log('Find spending transactions, could be after several pages')
-        console.log(data.pagesTotal)
+        // console.log('Find spending transactions, could be after several pages')
+        // console.log(data.pagesTotal)
 
-        let publicKey;
+        let publicKey
 
         for (var tx of data.txs) {
           const script = new bitcore.Script(tx.vin[0].scriptSig.hex)
@@ -185,7 +185,9 @@ export const decryptChunk = (chunk) => {
 
         const secret = bitcore.crypto.Hash.sha256(publicKey.toBuffer())
         const plaintext = aescbc.decryptCipherkey(new Buffer(chunk.ciphertext, 'base64'), secret)
-        console.log(plaintext.toString())
+        // console.log(plaintext.toString())
+
+        dispatch(decryptedFile(chunk, plaintext))
       })
 
       // ipc.send('save-release', path)
@@ -194,3 +196,5 @@ export const decryptChunk = (chunk) => {
     ipc.send('save-file-dialog')
   }
 }
+
+export const decryptedFile = createAction('DECRYPTED_FILE')

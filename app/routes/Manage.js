@@ -7,7 +7,13 @@ import AddressStatus from '../components/AddressStatus'
 import Header from '../components/Header'
 
 
-class Manage extends React.Component {
+class Manage extends React.PureComponent {
+  static propTypes = {
+    addresses: React.PropTypes.object,
+    dispatch: React.PropTypes.func.isRequired,
+    payload: React.PropTypes.object,
+  }
+
   constructor(props) {
     super(props)
     this.timer = null
@@ -40,27 +46,16 @@ class Manage extends React.Component {
     return payload.chunks.map(chunk => chunk.address)
   }
 
-  handleSave = (e) => {
+  handleSave = () => {
     this.props.dispatch(saveRelease(this.props.payload))
   }
 
-  handleExport = (e) => {
+  handleExport = () => {
     this.props.dispatch(exportRelease(this.props.payload))
   }
 
-  render() {
-    return (
-      <div>
-        <Header title="Manage Release">
-          <Link className="btn btn-default" to="/">Home</Link>
-          &nbsp;
-          <button className="btn btn-default" onClick={this.handleSave}>Save</button>
-          &nbsp;
-          <button className="btn btn-default" onClick={this.handleExport}>Export</button>
-        </Header>
-        {this.renderChunks()}
-      </div>
-    )
+  handleWithdraw(chunk) {
+    this.props.dispatch(withdrawChunk(chunk))
   }
 
   renderChunks() {
@@ -78,10 +73,6 @@ class Manage extends React.Component {
         </table>
       </div>
     )
-  }
-
-  handleWithdraw(chunk) {
-    this.props.dispatch(withdrawChunk(chunk))
   }
 
   renderChunk(chunk) {
@@ -106,12 +97,26 @@ class Manage extends React.Component {
       </tr>
     )
   }
+
+  render() {
+    return (
+      <div>
+        <Header title="Manage Release">
+          <Link className="btn btn-default" to="/">Home</Link>
+          &nbsp;
+          <button className="btn btn-default" onClick={this.handleSave}>Save</button>
+          &nbsp;
+          <button className="btn btn-default" onClick={this.handleExport}>Export</button>
+        </Header>
+        {this.renderChunks()}
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
     addresses: state.addresses,
-    files: state.files,
     payload: state.payload,
   }
 }

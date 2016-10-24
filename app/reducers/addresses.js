@@ -5,7 +5,5 @@ export default handleActions({
     const { address, status } = action.payload
     return { ...state, [address]: status }
   },
-  UPDATE_LOCATION: (state, action) => {
-    return {}
-  }
+  UPDATE_LOCATION: () => ({}),
 }, {})

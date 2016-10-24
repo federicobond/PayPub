@@ -1,8 +1,9 @@
 import React from 'react'
 
-class Header extends React.Component {
+class Header extends React.PureComponent {
   static propTypes = {
-    title: React.PropTypes.string.isRequired
+    title: React.PropTypes.string.isRequired,
+    children: React.PropTypes.node,
   }
 
   render() {

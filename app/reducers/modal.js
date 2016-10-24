@@ -5,7 +5,5 @@ export default handleActions({
     return action.payload
   },
 
-  CLOSE_MODAL: (state, action) => {
-    return null
-  },
+  CLOSE_MODAL: () => null
 }, null)

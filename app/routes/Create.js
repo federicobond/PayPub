@@ -1,10 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { hashHistory as history } from 'react-router'
 import { openFileDialog, createRelease } from '../actions'
 
-class Create extends React.Component {
+class Create extends React.PureComponent {
+  static propTypes = {
+    dispatch: React.PropTypes.func.isRequired,
+    files: React.PropTypes.arrayOf(
+      React.PropTypes.string
+    )
+  }
+
   constructor(props) {
     super(props)
 
@@ -23,6 +29,19 @@ class Create extends React.Component {
       title: this.state.title,
       proofHeight: this.state.proofHeight,
     }))
+  }
+
+  renderFiles() {
+    const { files } = this.props
+
+    if (!files)
+      return null
+
+    return (
+      <ul className="list-group">
+        {files.map(path => <li className="list-group-item" key={path}>{path.split('/').pop()}</li>)}
+      </ul>
+    )
   }
 
   render() {
@@ -60,58 +79,11 @@ class Create extends React.Component {
       </div>
     )
   }
-
-  renderFiles() {
-    const { files } = this.props
-
-    if (!files)
-      return null
-
-    return (
-      <ul className="list-group">
-        {files.map(path => <li className="list-group-item" key={path}>{path.split('/').pop()}</li>)}
-      </ul>
-    )
-  }
-
-  renderChunks() {
-    const { payload } = this.props
-
-    if (!payload)
-      return null
-
-    return (
-      <table className="table">
-        <tbody>
-          {payload.chunks.map(chunk => {
-            return (
-              <tr key={chunk.address}>
-                <td>{chunk.public.address}</td>
-                <td>{'pending'}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    )
-  }
-
-  renderPayload() {
-    const { payload } = this.props
-
-    if (!payload)
-      return null
-
-    return (
-      <pre>{JSON.stringify(payload, null, '  ')}</pre>
-    )
-  }
 }
 
 const mapStateToProps = (state) => {
   return {
-    files: state.files,
-    payload: state.payload,
+    files: state.files
   }
 }
 

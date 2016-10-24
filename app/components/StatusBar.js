@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-class StatusBar extends React.Component {
+class StatusBar extends React.PureComponent {
   static propTypes = {
     sync: React.PropTypes.object
   }

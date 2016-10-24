@@ -1,10 +1,17 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import StatusBar from '../components/StatusBar'
 import * as modals from '../modals'
 
-class App extends React.Component {
+class App extends React.PureComponent {
+  static propTypes = {
+    children: React.PropTypes.node,
+    modal: React.PropTypes.shape({
+      component: React.PropTypes.string.isRequired,
+      props: React.PropTypes.object,
+    })
+  }
+
   renderModal() {
     if (this.props.modal) {
       const { component, props } = this.props.modal

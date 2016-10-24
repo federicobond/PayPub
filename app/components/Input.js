@@ -1,6 +1,21 @@
-import React from 'React'
+import React from 'react'
+import omit from 'lodash/omit'
 
-class Input extends React.Component {
+class Input extends React.PureComponent {
+  static propTypes = {
+    className: React.PropTypes.string,
+    validators: React.PropTypes.arrayOf(
+      React.PropTypes.func
+    ),
+    onError: React.PropTypes.func,
+    onValid: React.PropTypes.func,
+    onChange: React.PropTypes.func,
+  }
+
+  static defaultProps = {
+    validators: []
+  }
+
   constructor(props) {
     super(props)
     this.state = { errors: [] }
@@ -33,19 +48,11 @@ class Input extends React.Component {
   }
   
   render() {
-    let {
-      validators,
-      className,
-      onError,
-      onValid,
-      ...props
-    } = this.props
-
-    className = className || 'form-control'
+    const props = omit(this.props, ['validators', 'onError', 'onValid'])
 
     return (
       <div className={'form-group' + (this.state.errors.length > 0 ? ' has-error': '')}>
-        <input className={className} {...props} onChange={this.handleChange} />
+        <input {...props} className="form-control" onChange={this.handleChange} />
       </div>
     )
   }

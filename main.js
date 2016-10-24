@@ -89,7 +89,7 @@ ipc.on('save-file-dialog', function(event) {
 ipc.on('load-file', function(event, path) {
 
   fs.readFile(path, function(err, data) {
-    event.sender.send('loaded-file', err || data)
+    event.sender.send('loaded-file', err || data)
   })
 
 })
@@ -145,18 +145,6 @@ ipc.on('sync-addresses', function(event, addresses) {
     })
   })
 })
-
-ipc.on('recover-key', function(event, address) {
-  insight.addressTxs(address, function(err, info) {
-    if (err) {
-      event.sender.send('recovered-key', err)
-      return
-    }
-
-    event.sender.send('recovered-key', { address, key })
-  })
-})
-
 
 function updateExplorer() {
   if (mainWindow) {

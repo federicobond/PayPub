@@ -1,19 +1,22 @@
 import React from 'react'
-import bitcore from 'bitcore-lib'
 import { connect } from 'react-redux'
 import Modal from './Modal'
 import { closeModal } from '../actions'
 
 function QRCode({ address }) {
-  var qr = require('qr-image');
-  var qr_svg = qr.imageSync('bitcoin:' + address, { type: 'svg' });
+  var qr = require('qr-image')
+  var qr_svg = qr.imageSync('bitcoin:' + address, { type: 'svg' })
 
   return <svg width="150" height="150" dangerouslySetInnerHTML={{__html: qr_svg}} />
 }
 
-class PurchaseModal extends React.Component {
+QRCode.propTypes = { address: React.PropTypes.string.isRequired }
+
+class PurchaseModal extends React.PureComponent {
   static propTypes = {
-    chunk: React.PropTypes.object.isRequired
+    chunk: React.PropTypes.object.isRequired,
+    dispatch: React.PropTypes.func.isRequired,
+    onConfirm: React.PropTypes.func,
   }
 
   handleClose = () => {
@@ -22,6 +25,13 @@ class PurchaseModal extends React.Component {
 
   handleConfirm = () => {
     this.props.onConfirm()
+  }
+
+  getActions() {
+    return [
+      <button type="button" key="1" className="btn btn-default" onClick={this.handleClose}>Close</button>,
+      <button type="button" key="2" className="btn btn-primary" onClick={this.handleConfirm}>Confirm</button>,
+    ]
   }
 
   render() {
@@ -40,13 +50,6 @@ class PurchaseModal extends React.Component {
         </div>
       </Modal>
     )
-  }
-
-  getActions() {
-    return [
-      <button type="button" key="1" className="btn btn-default" onClick={this.handleClose}>Close</button>,
-      <button type="button" key="2" className="btn btn-primary" onClick={this.handleConfirm}>Confirm</button>,
-    ]
   }
 }
 

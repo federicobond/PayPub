@@ -1,6 +1,4 @@
 const path = require('path')
-const webpack = require('webpack')
-const webpackTargetElectronRenderer = require('webpack-target-electron-renderer')
 
 module.exports = {
   target: 'electron-renderer',

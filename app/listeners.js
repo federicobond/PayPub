@@ -6,7 +6,6 @@ import {
 }  from './actions'
 import store from './store'
 
-const { dialog } = require('electron').remote
 const ipc = require('electron').ipcRenderer
 
 ipc.on('selected-files', (event, path) => {

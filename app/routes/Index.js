@@ -3,8 +3,12 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { loadRelease } from '../actions'
 
-class Index extends React.Component {
-  handleLoad = (e) => {
+class Index extends React.PureComponent {
+  static propTypes = {
+    dispatch: React.PropTypes.func.isRequired
+  }
+
+  handleLoad = () => {
     this.props.dispatch(loadRelease())
   }
   
@@ -26,62 +30,6 @@ class Index extends React.Component {
       </div>
     )
   }
-
-  renderFiles() {
-    const { files } = this.props
-
-    if (!files)
-      return null
-
-    return (
-      <div>
-        <ul>{files.map(path => <li key={path}><code>{path}</code></li>)}</ul>
-        <button className="btn btn-primary" type="button" onClick={this.handleCreate}>Publish</button>
-        {this.renderChunks()}
-        {this.renderPayload()}
-      </div>
-    )
-  }
-
-  renderChunks() {
-    const { payload } = this.props
-
-    if (!payload)
-      return null
-
-    return (
-      <table className="table">
-        <tbody>
-          {payload.chunks.map(chunk => {
-            return (
-              <tr key={chunk.address}>
-                <td>{chunk.public.address}</td>
-                <td>{'pending'}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    )
-  }
-
-  renderPayload() {
-    const { payload } = this.props
-
-    if (!payload)
-      return null
-
-    return (
-      <pre>{JSON.stringify(payload, null, '  ')}</pre>
-    )
-  }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    files: state.files,
-    payload: state.payload,
-  }
-}
-
-export default connect(mapStateToProps)(Index)
+export default connect()(Index)

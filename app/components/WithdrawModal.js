@@ -14,9 +14,12 @@ function addressValidator(value) {
 }
 
 
-class WithdrawModal extends React.Component {
+class WithdrawModal extends React.PureComponent {
   static propTypes = {
-    chunk: React.PropTypes.object.isRequired
+    amount: React.PropTypes.number.isRequired,
+    chunk: React.PropTypes.object.isRequired,
+    dispatch: React.PropTypes.func.isRequired,
+    onConfirm: React.PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -30,6 +33,13 @@ class WithdrawModal extends React.Component {
 
   handleConfirm = () => {
     this.props.onConfirm(this.state.address)
+  }
+
+  getActions() {
+    return [
+      <button type="button" key="1" className="btn btn-default" onClick={this.handleClose}>Close</button>,
+      <button type="button" key="2" className="btn btn-primary" onClick={this.handleConfirm} disabled={this.state.error}>Confirm</button>,
+    ]
   }
 
   render() {
@@ -46,21 +56,14 @@ class WithdrawModal extends React.Component {
         <Input
           type="text" value={this.state.address}
           onChange={(e) => this.setState({ address: e.target.value })}
-          onError={(e) => this.setState({ error: true })}
-          onValid={(e) => this.setState({ error: false })}
+          onError={() => this.setState({ error: true })}
+          onValid={() => this.setState({ error: false })}
           validators={[addressValidator]}
         />
 
         <p className="text-danger"><strong>IMPORTANT:</strong> this will permanently and irreversibly reveal the encription key for this file. Make sure you are satisfied with the balance before proceeding.</p>
       </Modal>
     )
-  }
-
-  getActions() {
-    return [
-      <button type="button" key="1" className="btn btn-default" onClick={this.handleClose}>Close</button>,
-      <button type="button" key="2" className="btn btn-primary" onClick={this.handleConfirm} disabled={this.state.error}>Confirm</button>,
-    ]
   }
 }
 

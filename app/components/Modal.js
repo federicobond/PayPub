@@ -2,24 +2,22 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { closeModal } from '../actions'
 
-class Modal extends React.Component {
+class Modal extends React.PureComponent {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
     actions: React.PropTypes.array,
+    children: React.PropTypes.node,
+    dispatch: React.PropTypes.func.isRequired,
   }
 
   constructor(props) {
     super(props)
 
     this.escapeKeyListener = (e) => {
-      if (event.key === 'Escape' || event.keyCode === 27) {
+      if (e.key === 'Escape' || e.keyCode === 27) {
         this.handleClose()
       }
     }
-  }
-
-  handleClose = () => {
-    this.props.dispatch(closeModal())
   }
 
   componentDidMount() {
@@ -28,6 +26,10 @@ class Modal extends React.Component {
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.escapeKeyListener)
+  }
+
+  handleClose = () => {
+    this.props.dispatch(closeModal())
   }
 
   render() {

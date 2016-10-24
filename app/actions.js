@@ -8,6 +8,8 @@ import insight from '../insight'
 
 const FEE_IN_SATOSHIS = 10000
 
+export const updateLocation = createAction('UPDATE_LOCATION')
+
 export const openFileDialog = createAction('OPEN_FILE_DIALOG', () => {
   ipc.send('open-file-dialog', { multi: true })
 })

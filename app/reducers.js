@@ -1,40 +1,15 @@
+import { combineReducers } from 'redux'
 import { handleActions } from 'redux-actions'
+import addresses from './reducers/addresses'
+import files from './reducers/files'
+import modal from './reducers/modal'
+import payload from './reducers/payload'
+import sync from './reducers/sync'
 
-const initial = {
-  loading: false,
-  addresses: {},
-}
-
-export default handleActions({
-
-  FILES_OPENED: (state, action) => {
-    return { ...state, files: action.payload }
-  },
-
-  CREATE_RELEASE: (state, action) => {
-    return { ...state, payload: action.payload }
-  },
-
-  LOADED_RELEASE: (state, action) => {
-    return { ...state, payload: action.payload }
-  },
-
-  SYNC: (state, action) => {
-    return { ...state, sync: action.payload }
-  },
-
-  SYNCED_ADDRESS: (state, action) => {
-    const { address, status } = action.payload
-    return { ...state, addresses: { ...state.addresses, [address]: status } }
-  },
-
-  OPEN_MODAL: (state, action) => {
-    return { ...state, modal: action.payload }
-  },
-
-  CLOSE_MODAL: (state, action) => {
-    const { modal, ...rest } = state
-    return rest
-  }
-
-}, initial)
+export default combineReducers({
+  addresses,
+  files,
+  modal,
+  payload,
+  sync,
+})

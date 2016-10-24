@@ -99,6 +99,7 @@ ipc.on('load-release', function(event, path) {
   fs.readFile(path, function(err, data) {
 
     const window = BrowserWindow.fromWebContents(event.sender)
+    window.setTitle(path.split('/').pop())
     window.setRepresentedFilename(path)
 
     try {

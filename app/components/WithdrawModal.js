@@ -41,8 +41,6 @@ class WithdrawModal extends React.Component {
       <Modal title="Withdraw funds" actions={this.getActions()}>
         <p>You are about to withdraw <strong>{amount} BTC</strong> from <code>{chunk.address}</code>.</p>
 
-        <p className="text-danger"><strong>IMPORTANT:</strong> this will permanently and irreversibly reveal the encription key for this file. Make sure you are satisfied with the balance before proceeding.</p>
-
         <p>Please enter a destination address:</p>
 
         <Input
@@ -52,6 +50,8 @@ class WithdrawModal extends React.Component {
           onValid={(e) => this.setState({ error: false })}
           validators={[addressValidator]}
         />
+
+        <p className="text-danger"><strong>IMPORTANT:</strong> this will permanently and irreversibly reveal the encription key for this file. Make sure you are satisfied with the balance before proceeding.</p>
       </Modal>
     )
   }

@@ -39,7 +39,7 @@ class Create extends React.PureComponent {
 
     return (
       <ul className="list-group">
-        {files.map(path => <li className="list-group-item" key={path}>{path.split('/').pop()}</li>)}
+        {files.map(({ path }) => <li className="list-group-item" key={path}>{path.split('/').pop()}</li>)}
       </ul>
     )
   }

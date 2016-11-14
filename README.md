@@ -48,10 +48,14 @@ To package the application into a platform-specific executable:
 
 		npm run package
 
+## Roadmap
+
+ * Connect to nodes directly instead of relying on Insight
+ * Improve UI
 
 ## Author
 
- * Federico Bond - @federicobond
+ * Federico Bond - [@federicobond](https://github.com/federicobond)
 
 ## License
 

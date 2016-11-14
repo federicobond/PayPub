@@ -1,7 +1,7 @@
 {
-  "name": "paypub-test",
-  "version": "1.0.0",
-  "description": "",
+  "name": "paypub",
+  "version": "0.0.1",
+  "description": "A user-friendly implementation of the PayPub protocol for trustless information publishing on Bitcoin",
   "repository": "https://github.com/federicobond/PayPub",
   "main": "main.js",
   "scripts": {

@@ -73,6 +73,11 @@ ipc.on('open-file-dialog', function(event, options) {
     if (!files) {
       return
     }
+
+    if (options.read) {
+      files = files.map(path => ({ path: path, contents: fs.readFileSync(path) }))
+    }
+
     event.sender.send('selected-files', files)
   })
 })
@@ -105,6 +110,7 @@ ipc.on('load-release', function(event, path) {
     try {
       data = JSON.parse(data)
     } catch (e) {
+      data = null
       err = new Error('file is not a valid release')
     }
 

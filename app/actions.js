@@ -11,7 +11,7 @@ const FEE_IN_SATOSHIS = 10000
 export const updateLocation = createAction('UPDATE_LOCATION')
 
 export const openFileDialog = createAction('OPEN_FILE_DIALOG', () => {
-  ipc.send('open-file-dialog', { multi: true })
+  ipc.send('open-file-dialog', { multi: true, read: true })
 })
 
 export const filesOpened = createAction('FILES_OPENED')
@@ -23,9 +23,9 @@ export const createRelease = ({ title }) => {
     const payload = {
       title,
       private: true,
-      chunks: files.map(path => {
+      chunks: files.map(({ path, contents }) => {
 
-        const content = new Buffer(path) // stub
+        const content = new Buffer(contents)
         const hash = bitcore.crypto.Hash.sha256(content)
         const privateKey = bitcore.PrivateKey(hash)
         const publicKey = privateKey.publicKey

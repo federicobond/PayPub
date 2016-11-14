@@ -7,7 +7,7 @@ class Create extends React.PureComponent {
   static propTypes = {
     dispatch: React.PropTypes.func.isRequired,
     files: React.PropTypes.arrayOf(
-      React.PropTypes.string
+      React.PropTypes.object
     )
   }
 
